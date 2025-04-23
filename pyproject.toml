@@ -1,6 +1,6 @@
 [project]
 name = "pygoerrors"
-version = "0.1.0"
+version = "0.1.1"
 description = "Go like errors for Python"
 authors = [{ name = "dreadster3", email = "afonso.antunes@live.com.pt" }]
 license = { file = "LICENSE" }
@@ -33,6 +33,9 @@ keywords = [
   "functional-programming",
 ]
 
+[tool.setuptools.package-data]
+pygoerrors = ["*.pyi", "py.typed"]
+
 [tool.mypy]
 exclude = ["examples/"]
 
@@ -47,4 +50,3 @@ mypy = "^1.15.0"
 
 [tool.poetry.group.release.dependencies]
 build = "^1.2.2.post1"
-
