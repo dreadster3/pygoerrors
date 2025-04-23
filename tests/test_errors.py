@@ -1,7 +1,6 @@
 from typing import override
 
 import pygoerrors
-from pygoerrors.helpers import NotSet
 
 
 def test_error_representation():
@@ -23,7 +22,7 @@ def test_error_bool():
 
 
 def test_error_bool_false():
-    err = NotSet
+    err = pygoerrors.NotSet
 
     assert not bool(err)
 
@@ -77,7 +76,7 @@ def test_error_as_none():
     err2 = pygoerrors.as_(err, SpecialError)
 
     assert err == err2
-    assert err2 == NotSet
+    assert err2 == pygoerrors.NotSet
 
 
 def test_error_join():

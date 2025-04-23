@@ -1,7 +1,7 @@
 from collections.abc import Iterable, Iterator
 from typing import override
 
-from pygoerrors import errors
+from pygoerrors.errors import new
 from pygoerrors.helpers import NotSet
 from pygoerrors.protocols import Error
 
@@ -24,5 +24,8 @@ class ErrorIterable[T: object](Iterable[T]):
         except StopIteration:
             raise
         except Exception as e:
-            self.__error = errors.new(str(e))
+            self.__error = new(str(e))
             raise StopIteration
+
+    def err(self) -> Error:
+        return self.__error

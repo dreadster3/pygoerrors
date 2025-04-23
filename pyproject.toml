@@ -5,9 +5,11 @@ description = "Go like errors for Python"
 authors = [{ name = "dreadster3", email = "afonso.antunes@live.com.pt" }]
 license = { file = "LICENSE" }
 readme = { file = "README.md", content-type = "text/markdown" }
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = []
 
+[tool.mypy]
+exclude = ["examples/"]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

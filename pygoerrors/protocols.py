@@ -22,5 +22,5 @@ class Error(Protocol):
 
 
 @runtime_checkable
-class Unwrappable(Protocol):
+class WrappedError(Protocol):
     def unwrap(self) -> Error: ...

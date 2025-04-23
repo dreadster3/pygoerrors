@@ -4,7 +4,7 @@ from collections.abc import Iterable
 from typing import override
 
 from pygoerrors.helpers import NotSet, NotSetType
-from pygoerrors.protocols import Error, Unwrappable
+from pygoerrors.protocols import Error, WrappedError
 
 
 def new(message: str) -> Error:
@@ -16,7 +16,7 @@ def _is(err: Error, target: Error) -> bool:
         if err == target:
             return True
 
-        if isinstance(err, Unwrappable):
+        if isinstance(err, WrappedError):
             err = err.unwrap()
             if not err:
                 return False
@@ -25,7 +25,7 @@ def _is(err: Error, target: Error) -> bool:
 
 
 def is_(err: Error, target: Error) -> bool:
-    if err or target:
+    if not err or not target:
         return err == target
 
     return _is(err, target)
@@ -39,7 +39,7 @@ def as_[T: Error](err: Error, target: type[T]) -> T | NotSetType:
         if isinstance(err, target):
             return err
 
-        if isinstance(err, Unwrappable):
+        if isinstance(err, WrappedError):
             err = err.unwrap()
             if not err:
                 return NotSet
@@ -48,8 +48,8 @@ def as_[T: Error](err: Error, target: type[T]) -> T | NotSetType:
 
 
 def join(*errs: Error) -> Error:
-    errors = filter(lambda e: e, errs)
-    errors = list(errors)
+    filtered_errors = filter(lambda e: e, errs)
+    errors = list(filtered_errors)
 
     if len(errors) == 0:
         return NotSet
@@ -73,3 +73,17 @@ class jsonError(Error):
     @override
     def error(self) -> str:
         return "\n".join(map(lambda e: e.error(), self.__errs))
+
+
+class wrappedError(Error, WrappedError):
+    def __init__(self, msg: str, error: Error):
+        self.__message = msg
+        self.__error = error
+
+    @override
+    def unwrap(self) -> Error:
+        return self.__error
+
+    @override
+    def error(self) -> str:
+        return self.__message
