@@ -78,3 +78,42 @@ def test_error_as_none():
 
     assert err == err2
     assert err2 == NotSet
+
+
+def test_error_join():
+    err1 = pygoerrors.new("test1")
+    err2 = pygoerrors.new("test2")
+
+    actual = pygoerrors.join(err1, err2)
+    expected = pygoerrors.new("test1\ntest2")
+
+    assert actual == expected
+
+
+def test_error_join_some_notset():
+    err1 = pygoerrors.new("test1")
+    err2 = pygoerrors.new("test2")
+    err3 = pygoerrors.NotSet
+
+    actual = pygoerrors.join(err1, err2, err3)
+    expected = pygoerrors.new("test1\ntest2")
+
+    assert actual == expected
+
+
+def test_error_join_all_not_set():
+    err1 = pygoerrors.NotSet
+    err2 = pygoerrors.NotSet
+    err3 = pygoerrors.NotSet
+
+    actual = pygoerrors.join(err1, err2, err3)
+    expected = pygoerrors.NotSet
+
+    assert actual == expected
+
+
+def test_error_join_empty():
+    actual = pygoerrors.join()
+    expected = pygoerrors.NotSet
+
+    assert actual == expected

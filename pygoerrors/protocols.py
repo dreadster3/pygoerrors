@@ -18,7 +18,7 @@ class Error(Protocol):
 
     @override
     def __repr__(self) -> str:
-        return str(self)
+        return self.error()
 
 
 @runtime_checkable

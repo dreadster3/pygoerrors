@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from typing import override
 
 from pygoerrors.helpers import NotSet, NotSetType
@@ -46,6 +47,16 @@ def as_[T: Error](err: Error, target: type[T]) -> T | NotSetType:
             return NotSet
 
 
+def join(*errs: Error) -> Error:
+    errors = filter(lambda e: e, errs)
+    errors = list(errors)
+
+    if len(errors) == 0:
+        return NotSet
+
+    return jsonError(errors)
+
+
 class stringError(Error):
     def __init__(self, error: str):
         self.__error = error
@@ -53,3 +64,12 @@ class stringError(Error):
     @override
     def error(self) -> str:
         return self.__error
+
+
+class jsonError(Error):
+    def __init__(self, errs: Iterable[Error]):
+        self.__errs = errs
+
+    @override
+    def error(self) -> str:
+        return "\n".join(map(lambda e: e.error(), self.__errs))
