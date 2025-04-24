@@ -33,6 +33,10 @@ keywords = [
   "functional-programming",
 ]
 
+[project.urls]
+Source = "https://github.com/dreadster3/pygoerrors"
+Tracker = "https://github.com/dreadster3/pygoerrors/issues"
+
 [tool.mypy]
 exclude = ["examples/"]
 
