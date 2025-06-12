@@ -3,6 +3,8 @@ from typing import Protocol, override, runtime_checkable
 
 @runtime_checkable
 class Error(Protocol):
+    """The error protocol, all errors must implement this protocol"""
+
     def error(self) -> str: ...
 
     @override

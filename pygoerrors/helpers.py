@@ -26,4 +26,5 @@ class NilType(Error):
 # Deprecated: Use Nil instead
 NotSet = NilType()
 
+# Type to use when an Error is not set
 Nil = NilType()
