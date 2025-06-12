@@ -1,7 +1,7 @@
 import pygoerrors
 
 
-def work() -> tuple[int, pygoerrors.Error]:
+def work() -> pygoerrors.Result[int]:
     return 0, pygoerrors.new("err")
 
 

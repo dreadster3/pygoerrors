@@ -24,3 +24,6 @@ class Error(Protocol):
 @runtime_checkable
 class WrappedError(Protocol):
     def unwrap(self) -> Error: ...
+
+
+type Result[T] = tuple[T, Error]

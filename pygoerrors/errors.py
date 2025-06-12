@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 from typing import override
 
-from pygoerrors.helpers import NotSet, NotSetType
+from pygoerrors.helpers import Nil, NilType
 from pygoerrors.protocols import Error, WrappedError
 
 
@@ -31,9 +31,9 @@ def is_(err: Error, target: Error) -> bool:
     return _is(err, target)
 
 
-def as_[T: Error](err: Error, target: type[T]) -> T | NotSetType:
+def as_[T: Error](err: Error, target: type[T]) -> T | NilType:
     if not err:
-        return NotSet
+        return Nil
 
     while True:
         if isinstance(err, target):
@@ -42,9 +42,9 @@ def as_[T: Error](err: Error, target: type[T]) -> T | NotSetType:
         if isinstance(err, WrappedError):
             err = err.unwrap()
             if not err:
-                return NotSet
+                return Nil
         else:
-            return NotSet
+            return Nil
 
 
 def join(*errs: Error) -> Error:
@@ -52,7 +52,7 @@ def join(*errs: Error) -> Error:
     errors = list(filtered_errors)
 
     if len(errors) == 0:
-        return NotSet
+        return Nil
 
     return jsonError(errors)
 

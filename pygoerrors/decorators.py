@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from typing import Callable, cast
 
 from pygoerrors.errors import new
-from pygoerrors.helpers import NotSet
+from pygoerrors.helpers import Nil
 from pygoerrors.iterators import ErrorIterable
 from pygoerrors.protocols import Error
 
@@ -12,7 +12,7 @@ def to_errors[T: object, **P](func: Callable[P, T]) -> Callable[P, tuple[T, Erro
     @functools.wraps(func)
     def wrapped(*args: P.args, **kwargs: P.kwargs) -> tuple[T, Error]:
         try:
-            return func(*args, **kwargs), NotSet
+            return func(*args, **kwargs), Nil
         except Exception as e:
             return cast(T, None), new(str(e))
 

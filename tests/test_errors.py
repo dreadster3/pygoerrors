@@ -22,7 +22,7 @@ def test_error_bool():
 
 
 def test_error_bool_false():
-    err = pygoerrors.NotSet
+    err = pygoerrors.Nil
 
     assert not bool(err)
 
@@ -70,13 +70,13 @@ def test_error_as_none():
             return f"special(some_prop={self.__some_prop})"
 
     def work() -> tuple[int, pygoerrors.Error]:
-        return 10, pygoerrors.NotSet
+        return 10, pygoerrors.Nil
 
     _, err = work()
     err2 = pygoerrors.as_(err, SpecialError)
 
     assert err == err2
-    assert err2 == pygoerrors.NotSet
+    assert err2 == pygoerrors.Nil
 
 
 def test_error_join():
@@ -89,10 +89,10 @@ def test_error_join():
     assert actual == expected
 
 
-def test_error_join_some_notset():
+def test_error_join_some_Nil():
     err1 = pygoerrors.new("test1")
     err2 = pygoerrors.new("test2")
-    err3 = pygoerrors.NotSet
+    err3 = pygoerrors.Nil
 
     actual = pygoerrors.join(err1, err2, err3)
     expected = pygoerrors.new("test1\ntest2")
@@ -101,18 +101,18 @@ def test_error_join_some_notset():
 
 
 def test_error_join_all_not_set():
-    err1 = pygoerrors.NotSet
-    err2 = pygoerrors.NotSet
-    err3 = pygoerrors.NotSet
+    err1 = pygoerrors.Nil
+    err2 = pygoerrors.Nil
+    err3 = pygoerrors.Nil
 
     actual = pygoerrors.join(err1, err2, err3)
-    expected = pygoerrors.NotSet
+    expected = pygoerrors.Nil
 
     assert actual == expected
 
 
 def test_error_join_empty():
     actual = pygoerrors.join()
-    expected = pygoerrors.NotSet
+    expected = pygoerrors.Nil
 
     assert actual == expected
