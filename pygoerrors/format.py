@@ -3,6 +3,20 @@ from pygoerrors.protocols import Error
 
 
 def errorf(format_str: str, *args: object) -> Error:
+    """
+    Format a string and an error. Use `%w` to wrap an error
+
+    Args:
+        format_str: The string to format
+        args: The arguments to format
+
+    Returns:
+        A new error with the formatted string and wrapped error.
+
+    Raises:
+        ValueError: When no argument is provided for `%w`
+        TypeError: When the argument for `%w` doesn't implement the Error protocol
+    """
     if "%w" in format_str:
         if format_str.count("%w") != 1:
             raise ValueError("Only one '%w' verb is allowed in format string")

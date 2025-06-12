@@ -12,11 +12,11 @@ class SpecialError(pygoerrors.Error):
         return f"special(some_prop={self.__some_prop})"
 
 
-def work() -> tuple[int, pygoerrors.Error]:
+def work() -> pygoerrors.Result[int]:
     return 0, SpecialError(1)
 
 
-def work2() -> tuple[int, pygoerrors.Error]:
+def work2() -> pygoerrors.Result[int]:
     _, err = work()
     return 0, pygoerrors.errorf("err: %w", err)
 

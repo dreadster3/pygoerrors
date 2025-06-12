@@ -3,6 +3,8 @@ from typing import Protocol, override, runtime_checkable
 
 @runtime_checkable
 class Error(Protocol):
+    """The error protocol, all errors must implement this protocol"""
+
     def error(self) -> str: ...
 
     @override
@@ -24,3 +26,6 @@ class Error(Protocol):
 @runtime_checkable
 class WrappedError(Protocol):
     def unwrap(self) -> Error: ...
+
+
+type Result[T] = tuple[T, Error]
